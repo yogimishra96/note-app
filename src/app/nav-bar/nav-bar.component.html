@@ -1,0 +1,9 @@
+<div class="toolbar" role="banner">
+    <img width="40" alt="Angular Logo" src="assets/note-app.png" />
+    <span>Note App</span>
+    <div class="spacer">
+            <span *ngIf="!loggedIn()" ><a routerLink="/user-login" routerLinkActive="active"> Login</a> | </span>
+            <a  *ngIf="!loggedIn()"  routerLink="/user-register" routerLinkActive="active">Register</a>
+            <a  *ngIf="loggedIn()" (click)="logOut()">Log Out</a>          
+    </div>
+</div>
