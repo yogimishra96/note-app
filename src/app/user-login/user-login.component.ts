@@ -3,7 +3,6 @@ import { AuthService } from '../services/auth.service';
 import * as alertify from 'alertifyjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-user-login',
@@ -13,13 +12,14 @@ import { Observable } from 'rxjs';
 export class UserLoginComponent implements OnInit {
 
 	constructor(private authService: AuthService,
-				private router: Router ) { }
+		private router: Router) { }
 
 	ngOnInit(): void {
 	}
 
+
+	// check the given username and password using auth service
 	onClickSubmit(userlogin: NgForm) {
-		console.log(userlogin);
 		const token = this.authService.authUser(userlogin);
 		if (token) {
 			localStorage.setItem('token', token.userName);

@@ -5,31 +5,35 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.css']
+	selector: 'app-user-register',
+	templateUrl: './user-register.component.html',
+	styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent implements OnInit {
 
-  constructor(private router: Router) { }
+	constructor(private router: Router) { }
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 
-  }
-
-  registerUser(userlogin: NgForm) {
+	}
 
 
-    // if(!userlogin.email ||  !userlogin.password || !userlogin.cnfPassword || (userlogin.password != userlogin.cnfPassword) ){
-    // alertify.error('Invalid details');
-    // return true;
-    // }
+	// saving data in localstorage, we can configure it for multiple users.
 
-    localStorage.setItem('Users', JSON.stringify(userlogin));
-    alertify.success('User added');
-    this.router.navigate(['/user-login']);
+	registerUser(userlogin: NgForm) {
 
-  }
+		// let registerData = [];
+		// registerData.push(userlogin);
+		// let usersData =  localStorage.getItem('Users');
+		// if(usersData) {
+		// 	usersData = JSON.parse(usersData);
+		// 	usersData.concat(registerData);
+		// }
+
+		localStorage.setItem('Users', JSON.stringify(userlogin));
+		alertify.success('User added');
+		this.router.navigate(['/user-login']);
+	}
 
 
 }

@@ -16,19 +16,19 @@ export interface noteData {
 })
 export class NotesComponentComponent implements OnInit {
 	note: string = '';
-	category: string  ='';
-	noteId : string = '';
-	isEdit : boolean = false;
+	category: string = '';
+	noteId: string = '';
+	isEdit: boolean = false;
 
 
 	constructor(private router: Router,
-		         ) { }
+	) { }
 
 	public noteObject = [{
-		"id" : this.getRandomColor(),
-        "note": "Room-1",
-        "category": "2nd Floor",
-		"categoryColor" : "blue"
+		"id": this.getRandomColor(),
+		"note": "Room-1",
+		"category": "2nd Floor",
+		"categoryColor": "blue"
 	}];
 
 
@@ -38,49 +38,55 @@ export class NotesComponentComponent implements OnInit {
 		}
 	}
 
+
+	// TO save and edit.  
+
 	saveNote() {
-        if(!this.isEdit){
-			this.noteObject.push({ id: this.getRandomColor(), 
-				note: this.note, 
-				category: this.category, 
-				categoryColor: this.setCategoryColor(this.category) 
+		if (!this.isEdit) {
+			this.noteObject.push({
+				id: this.getRandomColor(),
+				note: this.note,
+				category: this.category,
+				categoryColor: this.setCategoryColor(this.category)
 			});
-		} else  {
-			this.noteObject.forEach((key, index)  => {
-				if(key.id === this.noteId) {
+		} else {
+			this.noteObject.forEach((key, index) => {
+				if (key.id === this.noteId) {
 					key.categoryColor = this.setCategoryColor(this.category)
 					key.note = this.note,
-					key.category = this.category
-				}						
+						key.category = this.category
+				}
 			});
 		}
-	} 
+	}
 
 
-    deleteNote(data : any) {
+	deleteNote(data: any) {
 		const index = this.noteObject.indexOf(data);
 		this.noteObject.splice(index, 1);
 	}
 
-	setCategoryColor (category : string) {
+	setCategoryColor(category: string) {
 		let color = "";
 		let obj = this.noteObject.find(o => o.category === this.category);
-		if(obj){
+		if (obj) {
 			return obj.categoryColor
 		} else {
 			return this.getRandomColor();
 		}
-		
+
 		// return "green";
 	}
 
 	createNote() {
-		this.noteId = ""; 
-		this.note = ""; 
+		this.noteId = "";
+		this.note = "";
 		this.category = "";
 		this.isEdit = false;
 	}
 
+
+	// method to generate random color code used in UUID also.
 	getRandomColor() {
 		let letters = '0123456789ABCDEF';
 		let color = '#';
@@ -90,15 +96,10 @@ export class NotesComponentComponent implements OnInit {
 		return color;
 	}
 
-	editNote(data : any) {
-		this.noteId = data.id; 
-		this.note = data.note; 
-		this.category = data.category; 
-		
+	editNote(data: any) {
+		this.noteId = data.id;
+		this.note = data.note;
+		this.category = data.category;
 		this.isEdit = true;
-
-		console.log(this.note);
-		console.log(this.category);
-
 	}
 }

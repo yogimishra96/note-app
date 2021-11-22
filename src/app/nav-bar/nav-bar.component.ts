@@ -12,10 +12,10 @@ export class NavBarComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    
+
   }
 
-  loggedIn()  {
+  loggedIn() {
     return localStorage.getItem('token');
   }
 
