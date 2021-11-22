@@ -1,7 +1,9 @@
 <div>
     <!-- <button class="create-button"> Create Note </button> -->
 
-    <button type="button" class="create-button" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="create-button" 
+        (click)="createNote()"
+        data-toggle="modal" data-target="#myModal">
         Open modal
     </button>
 
@@ -14,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let noteData of noteObject; let i = index">
+            <tr *ngFor="let noteData of noteObject; let i = index" style="background-color: {{noteData.categoryColor}}"  >
                 <td>{{noteData.note}}</td>
                 <td>{{noteData.category}}</td>
                 <td>
                     <!-- <span><i class="fas fa-edit hand" (click)="deleteNote(noteData)" ></i></span>&nbsp; -->
                     <!-- <span> <i class="fas fa-trash hand"></i></span> -->
-                    <button type="button" class="btn btn-info" (click)="editNote(noteData)">Edit</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="editNote(noteData)">Edit</button>
                     <button type="button" style="margin-left: 10px;" class="btn btn-danger"
                         (click)="deleteNote(noteData)">Delete</button>
 
@@ -49,7 +51,7 @@
                 <form>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Category:</label>
-                        <input type="text" class="form-control" [(ngModel)]='note' name="category" id="recipient-name">
+                        <input type="text" class="form-control" [(ngModel)]='category' name="category" id="recipient-name">
                     </div>
                     <!-- <div class="form-group">
                         <label for="recipient-name" class="col-form-label">color:</label>
@@ -58,14 +60,14 @@
 
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Note:</label>
-                        <textarea class="form-control" name="note" [(ngModel)]='category' id="message-text"></textarea>
+                        <textarea class="form-control" name="note" [(ngModel)]='note' id="message-text"></textarea>
                     </div>
                 </form>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="saveNote()">Save
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="saveNote()">{{  (isEdit) ? 'Edit' : 'Save'}}
                     Note</button>
             </div>
 

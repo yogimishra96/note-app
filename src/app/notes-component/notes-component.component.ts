@@ -3,8 +3,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 export interface noteData {
-	note: string;
-	category: string;
+	// note: string;
+	// category: string;
+	// categoryColor : string;
 }
 
 
@@ -16,13 +17,18 @@ export interface noteData {
 export class NotesComponentComponent implements OnInit {
 	note: string = '';
 	category: string  ='';
+	noteId : string = '';
+	isEdit : boolean = false;
 
 
-	constructor(private router: Router) { }
+	constructor(private router: Router,
+		         ) { }
 
-	public noteObject   = [{
+	public noteObject = [{
+		"id" : this.getRandomColor(),
         "note": "Room-1",
-        "category": "2nd Floor"
+        "category": "2nd Floor",
+		"categoryColor" : "blue"
 	}];
 
 
@@ -33,22 +39,66 @@ export class NotesComponentComponent implements OnInit {
 	}
 
 	saveNote() {
-		console.log(this.note);
-		console.log(this.category);
-		// alert('this is the data');
-		this.noteObject.push({ note : this.note, category : this.category});
+        if(!this.isEdit){
+			this.noteObject.push({ id: this.getRandomColor(), 
+				note: this.note, 
+				category: this.category, 
+				categoryColor: this.setCategoryColor(this.category) 
+			});
+		} else  {
+			this.noteObject.forEach((key, index)  => {
+				if(key.id === this.noteId) {
+					key.categoryColor = this.setCategoryColor(this.category)
+					key.note = this.note,
+					key.category = this.category
+				}						
+			});
+		}
 	} 
 
-	// onSave() {
-	// 	console.log("df");
-	// }
+
     deleteNote(data : any) {
-		console.log(data);
 		const index = this.noteObject.indexOf(data);
 		this.noteObject.splice(index, 1);
 	}
 
+	setCategoryColor (category : string) {
+		let color = "";
+		let obj = this.noteObject.find(o => o.category === this.category);
+		if(obj){
+			return obj.categoryColor
+		} else {
+			return this.getRandomColor();
+		}
+		
+		// return "green";
+	}
+
+	createNote() {
+		this.noteId = ""; 
+		this.note = ""; 
+		this.category = "";
+		this.isEdit = false;
+	}
+
+	getRandomColor() {
+		let letters = '0123456789ABCDEF';
+		let color = '#';
+		for (let i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
 	editNote(data : any) {
+		this.noteId = data.id; 
+		this.note = data.note; 
+		this.category = data.category; 
+		
+		this.isEdit = true;
+
+		console.log(this.note);
+		console.log(this.category);
 
 	}
 }
